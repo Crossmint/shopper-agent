@@ -13,8 +13,6 @@ import { USDC, erc20 } from "@goat-sdk/plugin-erc20";
 
 import { z } from "zod";
 import { crossmintHeadlessCheckout } from "@goat-sdk/plugin-crossmint-headless-checkout";
-import { worldstore } from "@goat-sdk/plugin-worldstore";
-import { crossmint } from "@goat-sdk/crossmint";
 import { createInterface } from "node:readline";
 
 import { viem } from "@goat-sdk/wallet-viem";
@@ -60,7 +58,6 @@ const rl = createInterface({
     throw new Error("CROSSMINT_API_KEY is not set");
   }
   
-  const { wallets } = crossmint(apiKey);
 const systemMessage = [
     "When buying a product from a store, prefer to use <chain>:<contract_address>, i.e. 'base:0x1234567890abcdef', as the collection locator.",
     "When buying a product from a store, payment.payerAddress MUST be the address returned from the get_address tool.",
@@ -83,8 +80,6 @@ const systemMessage = [
             erc20({
                 tokens: [USDC],
             }),   
-            wallets(),
-            worldstore(),
             crossmintHeadlessCheckout(
                 {
                     apiKey,
@@ -108,7 +103,7 @@ const systemMessage = [
 
     console.clear();
     console.log("👋 Hey, I'm Alice from 11x!");
-    console.log("🛍️  I can help you browse and purchase products from across the world.");
+    console.log("🛍️  I can help you buy products from around the world.");
     console.log("💡 Type 'exit' to end our conversation.\n");
 
     while (true) {
@@ -124,7 +119,7 @@ const systemMessage = [
         }
 
         if (userInput.toLowerCase() === "exit") {
-            console.log("👋 Thanks for shopping with us! Have a great day!");
+            console.log("👋 Have a great day!");
             rl.close();
             break;
         }
@@ -151,7 +146,7 @@ const systemMessage = [
                 }]  
             });
 
-            console.log("\n🤖 Assistant:", response.output, "\n");
+            console.log("\n🤖 Alice:", response.output, "\n");
         } catch (error) {
             console.error("\n❌ Error:", error, "\n");
         }
