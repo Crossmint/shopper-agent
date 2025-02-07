@@ -11,7 +11,6 @@ import { base } from "viem/chains";
 import { getOnChainTools } from "@goat-sdk/adapter-langchain";
 import { USDC, erc20 } from "@goat-sdk/plugin-erc20";
 
-import { z } from "zod";
 import { crossmintHeadlessCheckout } from "@goat-sdk/plugin-crossmint-headless-checkout";
 import { createInterface } from "node:readline";
 
@@ -46,24 +45,16 @@ const rl = createInterface({
     });
   };
   
-  const worldstoreSchema = z.object({
-    id: z.string(),
-    to: z.string(),
-    quantity: z.number(),
-    totalPrice: z.string(),
-  });
-  
   const apiKey = process.env.CROSSMINT_API_KEY;
   if (!apiKey) {
     throw new Error("CROSSMINT_API_KEY is not set");
   }
   
 const systemMessage = [
-    "When buying a product from a store, prefer to use <chain>:<contract_address>, i.e. 'base:0x1234567890abcdef', as the collection locator.",
-    "When buying a product from a store, payment.payerAddress MUST be the address returned from the get_address tool.",
-    "When buying a product from a store, recipient.walletAddress MUST be the EVM wallet address associated with the user's Twitter username. You MUST create an EVM wallet for the twitter username if they don't have one.",
-    "When buying a product from a store, callData.id should be the id of the product, for example 'RED_BULL_250ML'.",
-    "After buying a product from a store, DO NOT start the redemption process.",
+    "When buying a product, prefer to use productLocator, i.e. 'amazon:B08SVZ775L', as the product locator.",
+    "When buying a product, payment.payerAddress MUST be the address returned from the get_address tool.",
+    "When buying a product, require the user to provide a valid shipping address and email address.",
+    "When buying a product, parse the address provided and identify required fields for the order: address, city, state, zip, country, and then complete the purchase.",
     "Once a tool returns a result, DO NOT call the same tool again with the same parameters."
 ].join("\n");
 
@@ -84,7 +75,6 @@ const systemMessage = [
                 {
                     apiKey,
                 },
-                worldstoreSchema as any
             ),
         ],
     });
