@@ -8,7 +8,7 @@ An AI agent that can buy any product on Amazon with its wallet and an onchain ba
 
 ```bash
 git clone https://github.com/Crossmint/shopper-agent.git
-cd ai-shopper-agent
+cd shopper-agent
 ```
 
 2. Prerequisites:
