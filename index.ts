@@ -92,7 +92,7 @@ const systemMessage = [
     });
 
     console.clear();
-    console.log("👋 Hey, I'm Alice from 11x!");
+    console.log("👋 Hey, there!");
     console.log("🛍️  I can help you buy products from around the world.");
     console.log("💡 Type 'exit' to end our conversation.\n");
 
@@ -136,7 +136,7 @@ const systemMessage = [
                 }]  
             });
 
-            console.log("\n🤖 Alice:", response.output, "\n");
+            console.log("\n🤖 Agent:", response.output, "\n");
         } catch (error) {
             console.error("\n❌ Error:", error, "\n");
         }
