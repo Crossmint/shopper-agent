@@ -24,5 +24,10 @@
     "devDependencies": {
         "@types/node": "22.7.4",
         "tsx": "^4.19.2"
+    },
+    "pnpm": {
+        "overrides": {
+            "form-data": "4.0.4"
+        }
     }
 }
